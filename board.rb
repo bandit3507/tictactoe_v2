@@ -31,12 +31,8 @@ class Board
         end
     end
 
-    # # 
-    # def print
-    #     @board.each{|row| puts row[0] + " " + row[1] + " " + row[2]}
-    # end
-
-
+    # refactored to print any size board
+    # had to rename method since it had the same name as print column
     def print_board
         @board.each do|row| 
             row.each_with_index do |column, idx|
@@ -50,12 +46,15 @@ class Board
         end
     end
 
+    # refactored to account for any row size
+    # incorporated the all? enumerable to check if all columns equaled the mark
     def win_row?(mark)
         @board.any? do |row|
-            row[0]==mark && row[1]==mark && row[2]==mark
+            row.all?{|column| column == mark}
         end
     end
 
+    # no need to refactor
     def win_column?(mark)
         (0..@board.length-1).each do |row|
             win_count = 0
@@ -69,21 +68,28 @@ class Board
         false
     end
 
+    # refactor to account for resizable grid
     def win_diagonal?(mark)
-        if @board[0][0] == mark && @board[1][1] == mark && @board[2][2] == mark
-            return true
-        elsif @board[0][2] == mark && @board[1][1] == mark && @board[2][0] == mark
-            return true
+        # left to right diagonal check
+        return true if (0..@board.length-1).all? do |index|
+            @board[index][index] == mark
+        end
+
+        # right to left diagonal check
+        return true if (0..@board.length-1).all? do |index|
+            row = index
+            column = @board.length-1 - index
+            @board[row][column] == mark
         end
         false
     end
 
+    # refactored to be more concise
     def win?(mark)
-        return true if win_row?(mark)
-        return true if win_column?(mark)
-        return true if win_diagonal?(mark)
+        win_row?(mark) || win_column?(mark) || win_diagonal?(mark)
     end
 
+    # no need to refactor
     def empty_positions?
         (0..@board.length-1).each do |row|
             (0..@board.length-1).each do |column|
@@ -92,13 +98,5 @@ class Board
         end
         false
     end
-
-
 end
-
-
-
-
-
-
 
