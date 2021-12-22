@@ -18,6 +18,7 @@ class Board
         @board[row][column] == '_'
     end
 
+    # no need to refactor
     def place_mark(position, mark)
         if !valid?(position)
             raise 'Error: invalid position'
@@ -30,8 +31,23 @@ class Board
         end
     end
 
-    def print
-        @board.each{|row| puts row[0] + " " + row[1] + " " + row[2]}
+    # # 
+    # def print
+    #     @board.each{|row| puts row[0] + " " + row[1] + " " + row[2]}
+    # end
+
+
+    def print_board
+        @board.each do|row| 
+            row.each_with_index do |column, idx|
+               if idx == row.length-1
+                   print column
+               else 
+                   print column + " "
+               end
+            end
+            puts
+        end
     end
 
     def win_row?(mark)

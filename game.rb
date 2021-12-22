@@ -21,11 +21,11 @@ class Game
     # main game loop
     def play
         if @board.empty_positions?
-            @board.print
+            @board.print_board
             position = @current_player.get_position
             @board.place_mark(position, @current_player.mark)
             if @board.win?(@current_player.mark)
-                @board.print
+                @board.print_board
                 puts "#{@current_player.mark} wins!"
                 return
             else
