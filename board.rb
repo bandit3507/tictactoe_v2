@@ -1,13 +1,17 @@
 class Board
 
-    def initialize
-        @board = Array.new(3){['_', '_', '_']}
+    # refactored to accept a size parameter
+    def initialize(size)
+        # must use Array.new twice or else the each row would point to the same row object
+        @board = Array.new(size){Array.new(size, '_' )}
     end
 
+    # no need to refactor
     def valid?(input_position)
         input_position.first < @board.length && input_position.last < @board.length
     end
 
+    # no need to refactor
     def empty?(input_position)
         row = input_position.first
         column = input_position.last
